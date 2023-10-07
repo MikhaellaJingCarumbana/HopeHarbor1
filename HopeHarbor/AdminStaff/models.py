@@ -7,7 +7,7 @@ class AdminStaff(User):
     UserType = models.CharField(
         max_length=12,
         choices=User.USER_TYPES,  # Use choices from User model
-        default='Admin',  # Set the default to 'donor'
+        default='admin',  # Set the default to 'donor'
     )
 
     def __str__(self):

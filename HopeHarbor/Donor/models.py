@@ -1,7 +1,6 @@
 from User.models import User
 from django.db import models
 
-# Create your models here.
 class Donor(User):
     DONATION_CHOICES = (
         ('cash', 'Cash'),
@@ -20,21 +19,54 @@ class Donor(User):
 
 
 class CashDetails(models.Model):
-    Amount = models.FloatField()
-    Date = models.DateField()
+    donorID = models.ForeignKey(Donor, on_delete=models.CASCADE, null=False)
+    Amount = models.FloatField(default=1.0)
+    Date = models.DateField(auto_now=True)
     pass
 
 
-class GoodsDetail(models.Model):
-    Quantity = models.IntegerField()
-    Expiry = models.DateField()
-    Date = models.DateField()
+
+class GoodsDetails(models.Model):
+    Quantity = models.IntegerField(default= 1)
+    Expiry = models.DateField(default='')
+    Date = models.DateField(auto_now_add=True)
     pass
 
 
 class Currency(models.Model):
     CurrencyID = models.BigAutoField(primary_key=True)
-    CurrencyType = models.CharField(max_length=25)
+    CURRENCY_CHOICES = (
+        ('USD', 'US Dollar'),
+        ('EUR', 'Euro'),
+        ('JPY', 'Japanese Yen'),
+        ('GBP', 'British Pound Sterling'),
+        ('CAD', 'Canadian Dollar'),
+        ('AUD', 'Australian Dollar'),
+        ('CHF', 'Swiss Franc'),
+        ('CNY', 'Chinese Yuan'),
+        ('INR', 'Indian Rupee'),
+        ('RUB', 'Russian Ruble'),
+        ('ZAR', 'South African Rand'),
+        ('AED', 'United Arab Emirates Dirham'),
+        ('SGD', 'Singapore Dollar'),
+        ('NZD', 'New Zealand Dollar'),
+        ('HKD', 'Hong Kong Dollar'),
+        ('SEK', 'Swedish Krona'),
+        ('NOK', 'Norwegian Krone'),
+        ('DKK', 'Danish Krone'),
+        ('KRW', 'South Korean Won'),
+        ('BRL', 'Brazilian Real'),
+        ('MXN', 'Mexican Peso'),
+        ('ARS', 'Argentine Peso'),
+        ('TRY', 'Turkish Lira'),
+        ('EGP', 'Egyptian Pound'),
+        ('PHP', 'Philippine Peso'),
+        # Add more currencies as needed
+    )
+    CurrencyType = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='PHP')
+
+    def __str__(self):
+        return self.get_CurrencyType_display()
 
 
 class DIK(models.Model):
@@ -44,11 +76,11 @@ class DIK(models.Model):
 
 
 class Amount_Tracker(models.Model):
-    Amount = models.FloatField()
+    Amount = models.FloatField(default=0.0)
     pass
 
 
 class Goods_Tracker(models.Model):
-    Quantity = models.IntegerField()
+    Quantity = models.IntegerField(default=0)
 
 # Rowen and Gian

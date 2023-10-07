@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'SupportTicket',
     'User',
     'AdminStaff',
+    'Feedback',
 ]
 
 MIDDLEWARE = [
